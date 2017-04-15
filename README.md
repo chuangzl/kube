@@ -1,14 +1,14 @@
 # kube
 由于不能从google container上直接pull镜像，所以这里通过docker hub的Automated Builds功能从项目的dockerfile中Build到docker的官方服务器上，然后再从它们上面拉取.
 
-##	kube 1.5.2需要的镜像:
+##	kube 1.6.0 需要的镜像:
 ```
 gcr.io/google_containers/kube-proxy-amd64                v1.5.2
 gcr.io/google_containers/kube-discovery-amd64            1.0
 gcr.io/google_containers/kubedns-amd64                   1.9
 gcr.io/google_containers/kube-scheduler-amd64            v1.5.2
 gcr.io/google_containers/kube-controller-manager-amd64   v1.5.2
-gcr.io/google_containers/kube-apiserver-amd64            v1.5.2
+gcr.io/google_containers/kube-apiserver-amd64            v1.6.0
 gcr.io/google_containers/etcd-amd64                      3.0.14-kubeadm
 gcr.io/google_containers/kube-dnsmasq-amd64              1.4
 gcr.io/google_containers/dnsmasq-metrics-amd64           1.0
