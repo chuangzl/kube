@@ -1,5 +1,5 @@
-# kube
-由于不能从google container上直接pull镜像，所以这里通过docker hub的Automated Builds功能从项目的dockerfile中Build到docker的官方服务器上，然后再从它们上面拉取.
+# kubernetes v1.6.0 构建
+由于不能从google container上直接pull镜像，所以这边保存镜像的dockerfile，build 交由阿里云来操作。(感谢sails的大力之作）
 
 ##	kube 1.6.0 需要的镜像:
 ```
@@ -8,8 +8,12 @@ gcr.io/google_containers/kube-discovery-amd64            1.0
 gcr.io/google_containers/kubedns-amd64                   1.9
 gcr.io/google_containers/kube-scheduler-amd64            v1.5.2
 gcr.io/google_containers/kube-controller-manager-amd64   v1.5.2
-gcr.io/google_containers/kube-apiserver-amd64            v1.6.0
-gcr.io/google_containers/etcd-amd64                      3.0.14-kubeadm
+
+gcr.io/google_containers/kube-apiserver-amd64            v1.6.0
+
+original: ogcr.io/google_containers/etcd-amd64                 3.0.17
+local: docker pull registry.cn-qingdao.aliyuncs.com/chuangzl/etcd:3.0.17
+
 gcr.io/google_containers/kube-dnsmasq-amd64              1.4
 gcr.io/google_containers/dnsmasq-metrics-amd64           1.0
 gcr.io/google_containers/exechealthz-amd64               1.2
