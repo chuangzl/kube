@@ -3,10 +3,17 @@
 
 ##	kube 1.6.0 需要的镜像:
 ```
-gcr.io/google_containers/kube-proxy-amd64                v1.5.2
+gcr.io/google_containers/kube-proxy-amd64                v1.6.0
+docker pull registry.cn-qingdao.aliyuncs.com/chuangzl/kube-proxy:v1.6.0
+
 gcr.io/google_containers/kube-discovery-amd64            1.0
+docker pull registry.cn-qingdao.aliyuncs.com/chuangzl/kube-discovery:1.0
+
 gcr.io/google_containers/kubedns-amd64                   1.9
-gcr.io/google_containers/kube-scheduler-amd64            v1.5.2
+docker pull registry.cn-qingdao.aliyuncs.com/chuangzl/kubedns:1.9
+
+gcr.io/google_containers/kube-scheduler-amd64            v1.6.0
+docker pull registry.cn-qingdao.aliyuncs.com/chuangzl/kube-scheduler:v1.6.0
 
 gcr.io/google_containers/kube-controller-manager-amd64   v1.6.0
 docker pull registry.cn-qingdao.aliyuncs.com/chuangzl/kube-controller-manager:v1.6.0
@@ -17,13 +24,18 @@ docker pull registry.cn-qingdao.aliyuncs.com/chuangzl/kube-apiserver:v1.6.0
 original: gcr.io/google_containers/etcd-amd64                 3.0.17
 local: docker pull registry.cn-qingdao.aliyuncs.com/chuangzl/etcd:3.0.17
 
-gcr.io/google_containers/kube-dnsmasq-amd64              1.4
+gcr.io/google_containers/kube-dnsmasq-amd64              1.4.1
+docker pull registry.cn-qingdao.aliyuncs.com/chuangzl/kube-dnsmasq:1.4.1
+
 gcr.io/google_containers/dnsmasq-metrics-amd64           1.0
+
 
 gcr.io/google_containers/exechealthz-amd64               v1.2.0
 docker pull registry.cn-qingdao.aliyuncs.com/chuangzl/exechealthz:v1.2.0
 
 gcr.io/google_containers/pause-amd64                     3.0
+docker pull registry.cn-qingdao.aliyuncs.com/chuangzl/pause:3.0
+
 kubernetes/heapster                                      canary
 gcr.io/google_containers/kubernetes-dashboard-amd64      v1.5.1
 ```
