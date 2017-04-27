@@ -55,3 +55,8 @@ docker_pull
 imageName=k8s-dns-dnsmasq-nanny
 imageVersion=1.14.1
 docker_pull
+
+#pull flannel
+docker pull $aliyun_repo/flannel:v0.7.1-amd64
+docker tag $aliyun_repo/flannel:v0.7.1-amd64  quay.io/coreos/flannel:v0.7.1-amd64
+docker rmi $aliyun_repo/flannel:v0.7.1-amd64  
