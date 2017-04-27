@@ -3,102 +3,18 @@
 
 ##	kube 1.6.0 需要的镜像:
 ```
-gcr.io/google_containers/kube-proxy-amd64                v1.6.0
-docker pull registry.cn-qingdao.aliyuncs.com/chuangzl/kube-proxy:v1.6.0
+gcr.io/google_containers/kube-apiserver-amd64	v1.6.0
+gcr.io/google_containers/kube-controller-manager-amd64	v1.6.0
+gcr.io/google_containers/kube-scheduler-amd64	v1.6.0
+gcr.io/google_containers/kube-proxy-amd64	v1.6.0
+gcr.io/google_containers/etcd-amd64	3.0.17
+gcr.io/google_containers/pause-amd64	3.0
+gcr.io/google_containers/k8s-dns-sidecar-amd64	1.14.1
+gcr.io/google_containers/k8s-dns-kube-dns-amd64	1.14.1
+gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64	1.14.1
 
-gcr.io/google_containers/kube-discovery-amd64            1.0
-docker pull registry.cn-qingdao.aliyuncs.com/chuangzl/kube-discovery:1.0
-
-gcr.io/google_containers/kubedns-amd64                   1.9
-docker pull registry.cn-qingdao.aliyuncs.com/chuangzl/kubedns:1.9
-
-gcr.io/google_containers/kube-scheduler-amd64            v1.6.0
-docker pull registry.cn-qingdao.aliyuncs.com/chuangzl/kube-scheduler:v1.6.0
-
-gcr.io/google_containers/kube-controller-manager-amd64   v1.6.0
-docker pull registry.cn-qingdao.aliyuncs.com/chuangzl/kube-controller-manager:v1.6.0
-
-gcr.io/google_containers/kube-apiserver-amd64            v1.6.0
-docker pull registry.cn-qingdao.aliyuncs.com/chuangzl/kube-apiserver:v1.6.0
-
-original: gcr.io/google_containers/etcd-amd64                 3.0.17
-local: docker pull registry.cn-qingdao.aliyuncs.com/chuangzl/etcd:3.0.17
-
-gcr.io/google_containers/kube-dnsmasq-amd64              1.4.1
-docker pull registry.cn-qingdao.aliyuncs.com/chuangzl/kube-dnsmasq:1.4.1
-
-gcr.io/google_containers/dnsmasq-metrics-amd64           1.0
-
-
-gcr.io/google_containers/exechealthz-amd64               v1.2.0
-docker pull registry.cn-qingdao.aliyuncs.com/chuangzl/exechealthz:v1.2.0
-
-gcr.io/google_containers/pause-amd64                     3.0
-docker pull registry.cn-qingdao.aliyuncs.com/chuangzl/pause:3.0
-
-kubernetes/heapster                                      canary
-gcr.io/google_containers/kubernetes-dashboard-amd64      v1.5.1
-```
-
-## docker hub上设置
-由于docker hub不能后期更改一个image的tag，所以每次更新kubernetes时，都在build settings中，手动增加一个版本对应文件
-
-## 更改tag
-```
-images=(kube-proxy-amd64:v1.5.2 kube-discovery-amd64:1.0 kubedns-amd64:1.9 kube-scheduler-amd64:v1.5.2 kube-controller-manager-amd64:v1.5.2 kube-apiserver-amd64:v1.5.2 etcd-amd64:3.0.14-kubeadm kube-dnsmasq-amd64:1.4 exechealthz-amd64:1.2 pause-amd64:3.0 dnsmasq-metrics-amd64:1.0)
-for imageName in ${images[@]} ; do
-  docker pull  sailsxu/$imageName
-  docker tag  sailsxu/$imageName gcr.io/google_containers/$imageName
-done
-# 监控
-images=(heapster:canary heapster_grafana:v2.6.0 heapster_influxdb:v0.6)
-for imageName in ${images[@]} ; do
-  docker pull  sailsxu/$imageName
-  docker tag  sailsxu/$imageName kubernetes/$imageName
-done
-# 日志
-images=(elasticsearch:v2.4.1-1 fluentd-elasticsearch:1.22 kibana:v4.6.1-1)
-for imageName in ${images[@]} ; do
-  docker pull  sailsxu/$imageName
-  docker tag  sailsxu/$imageName gcr.io/google_containers/$imageName
-done
-```
 
 
 ## 通过kubeadm安装
-```
-kubeadm init --use-kubernetes-version v1.5.2
 
-#或者(可以通过netstat -rn来看是否需要重新设置 --pod-network-cidr，默认的是10.244.0.0/16)
-#kubeadm init --use-kubernetes-version v1.5.2 --pod-network-cidr=172.16.0.0/16
-#当时加入某个结点时
-#kubeadm join --token=xxx.xxx ip
-```
-
-### 让kubernetes可以在master上启动业务pods
-```
-kubectl taint nodes --all dedicated-
-```
-### 当通过kubeadm安装后，还需要安装网络
-由于 pod 可能运行在不同的机器上，所以为了能让 pod 互相通信，就需要安装 pod 网络插件。weave net或者flannel，如果启动master时配置了pod-network-cidr，这里也要配置:
-```
-kubectl apply -f https://git.io/weave-kube
-
-```
-因为之前的 kube-dns addon 是依赖 pod 网络的，所以在没有部署 pod 网络之前，kube-dns 都会报错，因此只需要检查 kube-dns 是否成功就知道 pod 网络有没有成功了。
-```
-kubectl get pods --all-namespaces
-```
-
-## 如果docker hub也不能访问
-如果docker hub也不能访问，那么可以通过[阿里云](https://cr.console.aliyun.com/#/accelerator)或者[daocloud](https://www.daocloud.io/mirror#accelerator-doc)的加速，它会在docker的配置--registry-mirro中加一个镜像服务器，但是通过它还是不能访问google container的镜像，所以还是需要上面在docker hub中配置
-
-
-## 安装kubeadm
-由于kubeadm安装时也要从google的源上下载，这里配置一个离线的包[kubeadm](https://github.com/sails/kube/tree/master/other/)：
-```
-# ubuntu
-apt install -y -f gdebi
-apt install -y -f socat
-dpkg -i kubeadm.deb kubectl.deb kubelet.deb kube-cni.deb
-```
+见 other folder / init.sh  install_kube.sh
