@@ -18,3 +18,15 @@ gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64	1.14.1
 ## 通过kubeadm安装
 
 见 other folder / init.sh  install_kube.sh
+
+## dashboard 
+
+docker pull registry.cn-qingdao.aliyuncs.com/chuangzl/kubernetes-dashboard:v1.6.0
+
+download kubernetes-dashboard.yaml from other folder
+
+kubectl create -f ./kubernetes-dashboard.yaml
+
+kubectl proxy --address='0.0.0.0' --port=30099 --accept-hosts='^*$'
+
+open browser: http://<master address>:30099/ui

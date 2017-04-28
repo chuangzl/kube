@@ -60,7 +60,7 @@ spec:
     spec:
       containers:
       - name: kubernetes-dashboard
-        image: gcr.io/google_containers/kubernetes-dashboard-amd64:v1.6.0
+        image: registry.cn-qingdao.aliyuncs.com/chuangzl/kubernetes-dashboard:v1.6.0
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 9090
@@ -69,7 +69,7 @@ spec:
           # Uncomment the following line to manually specify Kubernetes API server Host
           # If not specified, Dashboard will attempt to auto discover the API server and connect
           # to it. Uncomment only if the default does not work.
-          - --apiserver-host=http://10.63.55.7:8080
+          #- --apiserver-host=http://10.63.55.7:8080
         livenessProbe:
           httpGet:
             path: /
@@ -94,5 +94,6 @@ spec:
   ports:
   - port: 80
     targetPort: 9090
+    nodePort: 30001
   selector:
     app: kubernetes-dashboard
