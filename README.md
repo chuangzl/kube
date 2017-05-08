@@ -16,6 +16,14 @@ gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64	1.14.1
 
 
 ## 通过kubeadm安装
+1. 下载 docker-engine-1.12.6-1.el7.centos.x86_64.rpm https://pan.baidu.com/s/1c2rdLtQ
+    下载后与init.sh 文件放在同一个目录下
+    
+2. 下载 kubernetes_rpm v1.6.1.zip   https://pan.baidu.com/s/1cgY5sE
+    下载解压后，将其中定rpm 文件与init.sh 文件放在同一个目录下
+
+3. 下载 go1.8.1.linux-amd64.tar.gz  https://pan.baidu.com/s/1bA42aM
+    下载后与init.sh 文件放在同一个目录下
 
 见 other folder / init.sh  install_kube.sh
 
